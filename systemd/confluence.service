@@ -1,0 +1,20 @@
+[Unit]
+Description=%p Service
+After=docker.service
+Requires=docker.service
+BindsTo=postgres.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=/usr/bin/docker pull muicoder/%p
+ExecStartPre=-/usr/bin/docker rm --force %p
+ExecStart=/usr/bin/docker run --name %p \
+  --net host \
+  -v /opt/atlassian/%p:/var/atlassian/%p \
+  -v /opt/atlassian/%p-logs:/opt/atlassian/logs \
+  muicoder/%p
+ExecStop=-/usr/bin/docker stop --time 3 %p
+
+[Install]
+WantedBy=multi-user.target
