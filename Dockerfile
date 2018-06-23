@@ -1,6 +1,6 @@
 FROM muicoder/glibc:server-jre
 
-ENV CONF_VERSION=6.9.0
+ENV CONF_VERSION=6.9.1
 
 WORKDIR /opt
 
